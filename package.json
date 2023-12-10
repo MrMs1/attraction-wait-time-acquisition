@@ -2,10 +2,10 @@
   "name": "attraction-wait-time-acquisition",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/scrape.js",
   "scripts": {
     "build": "tsc",
-    "start": "node src/scrape.js"
+    "start": "node dist/scrape.js"
   },
   "keywords": [],
   "author": "",
