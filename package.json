@@ -1,0 +1,20 @@
+{
+  "name": "attraction-wait-time-acquisition",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node src/scrape.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^21.6.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^7.0.4",
+    "typescript": "^5.3.2"
+  }
+}
