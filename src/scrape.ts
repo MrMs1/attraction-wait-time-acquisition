@@ -66,7 +66,9 @@ async function scrapeWebsite() {
 
   attractions.forEach((attraction) => {
     console.log(
-      `${attraction.name}: ${attraction.textContent.operationStatus}, ${attraction.textContent.waitTime}`
+      `${attraction.name}: ${
+        attraction.textContent.operationStatus
+      }, ${attraction.waitTime()}`
     );
   });
 
