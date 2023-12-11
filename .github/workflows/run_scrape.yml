@@ -1,7 +1,12 @@
 name: run-scrape
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: "30 0-7/1 * * *"
+    - cron: "0 1-7/1 * * *"
+    - cron: "15 1-7/1 * * *"
+    - cron: "30 1-7/1 * * *"
+    - cron: "45 1-7/1 * * *"
 
 jobs:
   build-and-run:
