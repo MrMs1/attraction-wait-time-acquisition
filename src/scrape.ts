@@ -25,7 +25,7 @@ async function scrapeWebsite() {
   const steelDragon = new Selector(
     "スチールドラゴン",
     "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(2) > div > p:nth-child(1) > span:nth-child(3) > span:nth-child(2)",
-    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(2) > div > p:nth-child(2) > span > span.font16 > strong"
+    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(2) > div > p:nth-child(2) > span > span.font16 > span:nth-child(1)"
   );
   const acrobat = new Selector(
     "アクロバット",
