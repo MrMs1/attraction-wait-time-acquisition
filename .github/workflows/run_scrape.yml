@@ -30,4 +30,5 @@ jobs:
       - name: Run Script
         env:
           SCRAPING_URL: ${{ secrets.SCRAPING_URL }}
+          SELECTORS: ${{ secrets.SELECTORS }}
         run: npm start
