@@ -14,34 +14,20 @@ async function scrapeWebsite() {
   await page.goto(url, { waitUntil: "networkidle0" });
 
   await page.waitForFunction(
-    "document.querySelector('#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(1) > div > p:nth-child(2) > span > span.font16 > span:nth-child(1) > b') != null"
+    "document.querySelector('#attraction01 > span') != null"
   );
 
-  const hakugei = new Selector(
-    "白鯨",
-    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(1) > div > p:nth-child(1) > span:nth-child(3) > span:nth-child(2)",
-    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(1) > div > p:nth-child(2) > span > span.font16 > span:nth-child(1)"
-  );
-  const steelDragon = new Selector(
-    "スチールドラゴン",
-    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(2) > div > p:nth-child(1) > span:nth-child(3) > span:nth-child(2)",
-    "#box01 > figure:nth-child(15) > div:nth-child(15) > figure:nth-child(2) > div > p:nth-child(2) > span > span.font16 > span:nth-child(1)"
-  );
-  const acrobat = new Selector(
-    "アクロバット",
-    "#box01 > figure:nth-child(15) > div:nth-child(17) > figure:nth-child(1) > div > p:nth-child(1) > span:nth-child(4) > span",
-    "#box01 > figure:nth-child(15) > div:nth-child(17) > figure:nth-child(1) > div > p:nth-child(2) > span:nth-child(1) > span"
-  );
-  const arashi = new Selector(
-    "嵐",
-    "#box01 > figure:nth-child(15) > div:nth-child(17) > figure:nth-child(2) > div > p:nth-child(1) > span:nth-child(2) > span:nth-child(2)",
-    "#box01 > figure:nth-child(15) > div:nth-child(17) > figure:nth-child(2) > div > p:nth-child(2) > span:nth-child(1) > span"
-  );
-  const selectors = [hakugei, steelDragon, acrobat, arashi];
+  const jsonSelectors = process.env.SELECTORS;
+  if (!jsonSelectors) {
+    console.error("SELECTORS is not defined");
+    return;
+  }
+  const json = JSON.parse(jsonSelectors);
+  const selectors: Selector[] = json.selectors;
 
   // ここで必要なデータを抽出
   const elements = await Promise.all(
-    selectors.map((selector) =>
+    selectors.map((selector: Selector) =>
       page.evaluate((selector) => {
         const operationStatus = document.querySelector(
           selector.operationStatus
@@ -49,6 +35,7 @@ async function scrapeWebsite() {
         const waitTime = document.querySelector(selector.waitTime);
         return {
           name: selector.name,
+          selector: selector,
           operationStatus: operationStatus ? operationStatus.textContent : null,
           waitTime: waitTime ? waitTime.textContent : null,
         };
@@ -59,6 +46,7 @@ async function scrapeWebsite() {
   const attractions = elements.map((element) => {
     return new Attraction(
       element.name,
+      element.selector,
       element.operationStatus,
       element.waitTime
     );
