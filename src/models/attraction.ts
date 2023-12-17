@@ -1,5 +1,8 @@
+import { Selector } from "./selector";
+
 export class Attraction {
   name: string;
+  selector: Selector;
   textContent: {
     operationStatus: string | null;
     waitTime: string | null;
@@ -7,6 +10,7 @@ export class Attraction {
 
   constructor(
     name: string,
+    selector: Selector,
     operationStatus: string | null,
     waitTime: string | null
   ) {
@@ -14,6 +18,7 @@ export class Attraction {
       ? operationStatus.replace(/状況＝|[\r\n\s]+/g, "")
       : null;
     this.name = name;
+    this.selector = selector;
     this.textContent = { operationStatus, waitTime };
   }
 
@@ -23,7 +28,9 @@ export class Attraction {
       return "-";
     }
     if (this.textContent.waitTime === null) {
-      throw new Error(`${this.name}の待ち時間が取得できませんでした。`);
+      throw new Error(
+        `${this.name}の待ち時間が取得できませんでした。selector:${this.selector.waitTime}`
+      );
     }
     const waitTimeMatch = this.textContent.waitTime
       .replace(/\s+/g, "")
